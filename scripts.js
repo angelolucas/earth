@@ -1,18 +1,22 @@
-let currentLength = 2;
+let currentLength = 1;
 const meridians = 18; // vertical
 const parallels = 20; // horizontal
 const earth = document.querySelector(".earth");
 
-const handleAdd = (e) => {
-  addBlock();
-};
+const handleChange = (e) => {
+  const newValue = e.target.value;
 
-const handleRemove = (e) => {
-  removeBlock();
+  while (newValue > currentLength) {
+    addBlock();
+  }
+
+  while (newValue < currentLength) {
+    removeBlock();
+  }
 };
 
 const addBlock = () => {
-  const allBlocks = earth.querySelectorAll("[data-index]");
+  const allBlocks = earth.querySelectorAll(".block");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1];
 
@@ -20,14 +24,17 @@ const addBlock = () => {
   newBlock.className = "block";
   newBlock.setAttribute("data-index", numberOfBlocks + 1);
   lastBlock.appendChild(newBlock);
+
+  currentLength++;
 };
 
 const removeBlock = () => {
-  const allBlocks = earth.querySelectorAll("[data-index]");
+  const allBlocks = earth.querySelectorAll(".block");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1];
 
   if (numberOfBlocks > 1) {
     lastBlock.remove();
+    currentLength--;
   }
 };
