@@ -6,45 +6,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="root">
-      <div class="blocks-left">
-        <div class="block block--left">
-          <div class="block block--left">
-            <div class="block block--left">
-              <div class="block block--left">
-                <div class="block block--left">
-                  <div class="block block--left">
-                    <div class="block block--left">
-                      <div class="block block--left">
-                        <div class="block block--left"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="blocks-right">
-        <div class="block block--right">
-          <div class="block block--right">
-            <div class="block block--right">
-              <div class="block block--right">
-                <div class="block block--right">
-                  <div class="block block--right">
-                    <div class="block block--right">
-                      <div class="block block--right">
-                        <div class="block block--right"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <div>
+      <input class="slider" oninput="handleChange(event)" type="range" min="1" max="30" style="margin-bottom: 100px">
+      <div class="earth">
+        <div class="block" data-index="1">
+          <div class="block" data-index="2">
+            
           </div>
         </div>
       </div>
     </div>
+    <script src="scripts.js"></script>
   </body>
 </html>
