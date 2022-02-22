@@ -14,15 +14,32 @@ const renderSphere = (value) => {
     addBlock(value);
   }
 
+  updateBlockStyle(value);
+
   currentLength = value;
 };
 
 window.onload = () => {
+  createStyle();
   renderSphere(currentLength);
+};
+
+const createStyle = () => {
+  const style = document.createElement("style");
+  style.innerHTML = `.block-x {}`;
+  document.head.appendChild(style);
 };
 
 const resetBlocks = () => {
   earth.querySelector(".earth .block")?.remove();
+};
+
+const updateBlockStyle = (value) => {
+  const styleElement = document.querySelector("style");
+
+  styleElement.sheet.cssRules[0].style.width = `${2000 / value}px`;
+  styleElement.sheet.cssRules[0].style.height = `${400 / value}px`;
+  styleElement.sheet.cssRules[0].style.transform = `rotateY(${360 / value}deg)`;
 };
 
 const addBlock = (value) => {
