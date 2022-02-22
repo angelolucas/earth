@@ -1,4 +1,4 @@
-let currentLength = 7;
+let currentLength = document.querySelector("input").value;
 const earth = document.querySelector(".earth");
 
 const handleChange = (e) => {
@@ -26,7 +26,7 @@ window.onload = () => {
 
 const createStyle = () => {
   const style = document.createElement("style");
-  style.innerHTML = `.block-x {}`;
+  style.innerHTML = `.block-x {} .block-y {}`;
   document.head.appendChild(style);
 };
 
@@ -36,10 +36,13 @@ const resetBlocks = () => {
 
 const updateBlockStyle = (value) => {
   const styleElement = document.querySelector("style");
+  const blockX = styleElement.sheet.cssRules[0].style;
+  const blockY = styleElement.sheet.cssRules[1].style;
+  blockX.width = `${2000 / value}px`;
+  blockX.height = `${520 / value}px`;
+  blockX.transform = `rotateY(${360 / value}deg)`;
 
-  styleElement.sheet.cssRules[0].style.width = `${2000 / value}px`;
-  styleElement.sheet.cssRules[0].style.height = `${400 / value}px`;
-  styleElement.sheet.cssRules[0].style.transform = `rotateY(${360 / value}deg)`;
+  blockY.transform = `rotateX(-${90 / value}deg)`;
 };
 
 const addBlock = (value) => {

@@ -19,9 +19,18 @@ input {
 
 .earth {
   position: relative;
-  perspective: 800px;
-  width: 20px;
-  height: 20px;
+  perspective: 999999999em;
+  width: 600px;
+  height: 600px;
+  outline: 1px solid red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > .block {
+    position: initial;
+    transform: rotateX(90deg);
+  }
 
   * {
     transform-style: preserve-3d;
@@ -43,6 +52,8 @@ input {
 }
 
 .block.block-y {
-  left: 0%;
+  transform-origin: top;
+  left: 5%;
   top: 100%;
+  width: 90%;
 }
