@@ -18,31 +18,35 @@ input {
   position: relative;
   perspective: 999999999em;
   width: 600px;
-  height: 600px;
+  height: 200px;
   outline: 1px solid red;
   display: flex;
   justify-content: center;
   align-items: center; }
-  .earth > .block {
+  .earth > .slice {
     position: initial;
-    transform: rotateX(90deg); }
+    transform: rotateX(0deg); }
   .earth * {
     transform-style: preserve-3d; }
 
-.block {
-  width: 100%;
-  height: 100%;
-  background: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 0 0.5px white;
-  position: absolute; }
-
-.block.block-x {
+.slice {
+  height: 0;
+  position: absolute;
+  background: red !important;
   transform-origin: left;
   left: 100%;
   top: 0%; }
 
-.block.block-y {
+.block {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 0.5px white;
+  position: absolute;
+  color: white;
+  text-shadow: 0 0 1px 1px black; }
+
+.block.block {
   transform-origin: top;
-  left: 5%;
+  left: 0%;
   top: 100%;
-  width: 90%; }
+  width: 100%; }

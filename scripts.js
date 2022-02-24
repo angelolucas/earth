@@ -11,7 +11,7 @@ const renderSphere = (value) => {
   resetBlocks();
 
   for (let step = 0; step < value; step++) {
-    addBlock(value);
+    addSlice(value, step);
   }
 
   updateBlockStyle(value);
@@ -26,45 +26,45 @@ window.onload = () => {
 
 const createStyle = () => {
   const style = document.createElement("style");
-  style.innerHTML = `.block-x {} .block-y {}`;
+  style.innerHTML = `.slice {} .block {}`;
   document.head.appendChild(style);
 };
 
 const resetBlocks = () => {
-  earth.querySelector(".earth .block")?.remove();
+  earth.querySelector(".earth .slice")?.remove();
 };
 
 const updateBlockStyle = (value) => {
   const styleElement = document.querySelector("style");
-  const blockX = styleElement.sheet.cssRules[0].style;
-  const blockY = styleElement.sheet.cssRules[1].style;
-  blockX.width = `${2000 / value}px`;
-  blockX.height = `${520 / value}px`;
-  blockX.transform = `rotateY(${360 / value}deg)`;
+  const slide = styleElement.sheet.cssRules[0].style;
+  const block = styleElement.sheet.cssRules[1].style;
+  slide.width = `${2000 / value}px`;
+  block.height = `${520 / value}px`;
 
-  blockY.transform = `rotateX(-${90 / value}deg)`;
+  slide.transform = `rotateY(${360 / value}deg)`;
+  block.transform = `rotateX(-${90 / value}deg)`;
 };
 
-const addBlock = (value) => {
-  const allBlocks = earth.querySelectorAll(".block-x");
+const addSlice = (value, step) => {
+  const allBlocks = earth.querySelectorAll(".slice");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1] || earth;
 
-  const newBlock = document.createElement("div");
-  newBlock.className = "block block-x";
-  lastBlock.appendChild(newBlock);
+  const newSlide = document.createElement("div");
+  newSlide.className = "slice";
+  lastBlock.appendChild(newSlide);
 
   for (let step = 0; step < value - 1; step++) {
-    addYBlock(newBlock);
+    addBlock(newSlide, step);
   }
 };
 
-const addYBlock = (element) => {
-  const allBlocks = element.querySelectorAll(".block-y");
+const addBlock = (element, step) => {
+  const allBlocks = element.querySelectorAll(".block");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1] || element;
 
-  const newBlockY = document.createElement("div");
-  newBlockY.className = "block block-y";
-  lastBlock.appendChild(newBlockY);
+  const newBlock = document.createElement("div");
+  newBlock.className = "block";
+  lastBlock.appendChild(newBlock);
 };
