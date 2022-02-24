@@ -41,11 +41,11 @@ const updateBlockStyle = (value) => {
   slide.width = `${2000 / value}px`;
   block.height = `${520 / value}px`;
 
-  slide.transform = `rotateY(${360 / value}deg)`;
-  block.transform = `rotateX(-${90 / value}deg)`;
+  //slide.transform = `rotateY(${360 / value}deg)`;
+  //block.transform = `rotateX(-${90 / value}deg)`;
 };
 
-const addSlice = (value, step) => {
+const addSlice = (value, columnIndex) => {
   const allBlocks = earth.querySelectorAll(".slice");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1] || earth;
@@ -55,16 +55,19 @@ const addSlice = (value, step) => {
   lastBlock.appendChild(newSlide);
 
   for (let step = 0; step < value - 1; step++) {
-    addBlock(newSlide, step);
+    addBlock(newSlide, columnIndex, step);
   }
 };
 
-const addBlock = (element, step) => {
+const addBlock = (element, columnIndex, lineIndex) => {
   const allBlocks = element.querySelectorAll(".block");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1] || element;
 
   const newBlock = document.createElement("div");
   newBlock.className = "block";
+  newBlock.style.backgroundPosition = `-${columnIndex * 66}px -${
+    lineIndex * 17
+  }px`;
   lastBlock.appendChild(newBlock);
 };
