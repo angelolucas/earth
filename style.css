@@ -7,25 +7,26 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: left; }
+  justify-content: center;
+  align-items: center; }
+
+label {
+  color: white;
+  padding: 10px;
+  display: block;
+  text-align: center;
+  font-family: arial; }
 
 input {
-  width: 90vw;
-  margin: 5vw;
   box-sizing: border-box; }
 
 .earth {
   position: relative;
   perspective: 999999999em;
-  width: 600px;
-  height: 200px;
-  outline: 1px solid red;
   display: flex;
   justify-content: center;
-  align-items: center; }
-  .earth > .slice {
-    position: initial;
-    transform: rotateX(0deg); }
+  align-items: center;
+  flex-direction: column; }
   .earth * {
     transform-style: preserve-3d; }
 
@@ -34,16 +35,35 @@ input {
   position: absolute;
   background: red !important;
   transform-origin: left;
-  left: 100%;
-  top: 0%; }
+  left: 100%; }
 
 .block {
-  background-image: url("image.jpg");
   background-repeat: no-repeat;
   width: 100%;
+  box-shadow: 0 0 0 0.5px white;
   position: absolute;
   color: white;
-  transform-origin: top;
   left: 0%;
-  top: 100%;
   width: 100%; }
+
+.hemisphere {
+  display: flex;
+  justify-content: center; }
+  .hemisphere > .slice {
+    left: initial;
+    transform: rotateX(0deg); }
+  .hemisphere.northern-hemisphere {
+    align-items: end; }
+    .hemisphere.northern-hemisphere .block {
+      bottom: 100%;
+      transform-origin: bottom; }
+  .hemisphere.southern-hemisphere .block {
+    top: 100%;
+    transform-origin: top; }
+
+.circle {
+  width: 1220px;
+  height: 1220px;
+  background: rgba(255, 0, 0, 0.5);
+  border-radius: 50%;
+  position: absolute; }

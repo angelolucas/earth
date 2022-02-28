@@ -6,16 +6,19 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <input
-      class="slider"
-      oninput="handleChange(event)"
-      type="range"
-      min="1"
-      max="30"
-      style="margin-bottom: 100px"
-      value="30"
-    />
-    <div class="earth"></div>
+    <label>
+      <input
+        class="slider"
+        oninput="handleChange(event)"
+        type="range"
+        min="4"
+        max="60"
+        value="60"
+        step="2"
+      />
+      <span>60</span>
+    </label>
+    <div class="earth"><span class="circle"></span></div>
 
     <script src="scripts.js"></script>
   </body>

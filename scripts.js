@@ -1,12 +1,13 @@
 let currentLength = document.querySelector("input").value;
 const earth = document.querySelector(".earth");
-const SPHERE_WIDTH = 1439;
-const SPHERE_HEIGHT = 360;
+const SPHERE_WIDTH = 4000;
+const SPHERE_HEIGHT = 4000;
 const blockWidth = SPHERE_WIDTH / currentLength;
 const blockHeight = SPHERE_HEIGHT / currentLength;
 
 const handleChange = (e) => {
   const totalSlices = parseInt(e.target.value);
+  document.querySelector("label span").innerHTML = totalSlices;
 
   renderSphere(totalSlices);
 };
@@ -14,40 +15,67 @@ const handleChange = (e) => {
 const renderSphere = (totalSlices) => {
   resetBlocks();
 
-  for (let currentSlice = 0; currentSlice < totalSlices; currentSlice++) {
-    addSlice({ totalSlices, currentSlice });
-  }
+  // northern hemisphere
+  createHemisphere({ hemisphere: "northern", totalSlices });
+
+  // southern hemisphere
+  createHemisphere({ hemisphere: "southern", totalSlices });
 
   updateBlockStyle(totalSlices);
 
   currentLength = totalSlices;
 };
 
+const createHemisphere = ({ hemisphere, totalSlices }) => {
+  const element = document.createElement("div");
+  element.className = `${hemisphere}-hemisphere hemisphere`;
+  earth.appendChild(element);
+
+  for (let currentSlice = 0; currentSlice < totalSlices; currentSlice++) {
+    addSlice({ totalSlices, currentSlice, element });
+  }
+};
+
 const resetBlocks = () => {
-  earth.querySelector(".earth .slice")?.remove();
+  earth.querySelectorAll(".earth > div").forEach((element) => element.remove());
 };
 
 const updateBlockStyle = (totalSlices) => {
   const styleElement = document.querySelector("style");
-  const slide = styleElement.sheet.cssRules[0].style;
-  const block = styleElement.sheet.cssRules[1].style;
-  slide.width = `${SPHERE_WIDTH / totalSlices}px`;
-  block.height = `${SPHERE_HEIGHT / totalSlices}px`;
+  styleElement.innerHTML = `
+    .earth { 
+      width: ${SPHERE_WIDTH}px;
+      height: ${SPHERE_WIDTH}px;
+    }
+    .slice {
+      width: ${SPHERE_WIDTH / totalSlices}px;
+      transform: rotateY(${360 / totalSlices}deg);
+    }
 
-  //slide.transform = `rotateY(${360 / totalSlices}deg)`;
-  //block.transform = `rotateX(-${90 / totalSlices}deg)`;
+    .block {
+      height: ${SPHERE_HEIGHT / totalSlices}px;
+    }
+    
+    .northern-hemisphere .block {
+      transform: rotateX(${360 / totalSlices}deg);
+    }
+
+    .southern-hemisphere .block {
+      transform: rotateX(-${360 / totalSlices}deg);
+    }
+  `;
 };
 
-const addSlice = ({ totalSlices, currentSlice }) => {
-  const allBlocks = earth.querySelectorAll(".slice");
+const addSlice = ({ totalSlices, currentSlice, element }) => {
+  const allBlocks = element.querySelectorAll(".slice");
   const numberOfBlocks = allBlocks.length;
-  const lastBlock = allBlocks[numberOfBlocks - 1] || earth;
+  const lastBlock = allBlocks[numberOfBlocks - 1] || element;
 
   const slice = document.createElement("div");
   slice.className = "slice";
   lastBlock.appendChild(slice);
 
-  for (let currentBlock = 0; currentBlock < totalSlices - 1; currentBlock++) {
+  for (let currentBlock = 0; currentBlock < totalSlices / 4; currentBlock++) {
     addBlock({ slice, currentSlice, currentBlock, totalSlices });
   }
 };
@@ -59,10 +87,8 @@ const addBlock = ({ slice, currentSlice, currentBlock, totalSlices }) => {
 
   const newBlock = document.createElement("div");
   newBlock.className = "block";
-  const bgXPosition = `-${(SPHERE_WIDTH / totalSlices) * currentSlice}px`;
-  const bgYPosition = `-${
-    (SPHERE_HEIGHT / totalSlices) * currentBlock + 360
-  }px`;
+  const bgXPosition = `${(100 / (totalSlices - 1)) * currentSlice}%`;
+  const bgYPosition = `${(100 / (totalSlices - 1)) * currentBlock}%`;
   newBlock.style.backgroundPosition = `${bgXPosition} ${bgYPosition}`;
   lastBlock.appendChild(newBlock);
 };
