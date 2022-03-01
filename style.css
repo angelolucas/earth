@@ -25,7 +25,7 @@ input {
   perspective: 999999999em;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column; }
   .earth * {
     transform-style: preserve-3d; }
@@ -38,17 +38,18 @@ input {
   left: 100%; }
 
 .block {
+  background-image: url("image.jpg");
   background-repeat: no-repeat;
   width: 100%;
-  box-shadow: 0 0 0 0.5px white;
+  box-shadow: 0 0 0 1px black;
   position: absolute;
-  color: white;
+  color: black;
   left: 0%;
   width: 100%; }
 
 .hemisphere {
   display: flex;
-  justify-content: center; }
+  justify-content: left; }
   .hemisphere > .slice {
     left: initial;
     transform: rotateX(0deg); }
@@ -62,8 +63,9 @@ input {
     transform-origin: top; }
 
 .circle {
-  width: 1220px;
-  height: 1220px;
-  background: rgba(255, 0, 0, 0.5);
+  display: none;
+  width: 1270px;
+  height: 1270px;
+  background: red;
   border-radius: 50%;
   position: absolute; }

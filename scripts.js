@@ -1,9 +1,7 @@
 let currentLength = document.querySelector("input").value;
 const earth = document.querySelector(".earth");
-const SPHERE_WIDTH = 4000;
-const SPHERE_HEIGHT = 4000;
-const blockWidth = SPHERE_WIDTH / currentLength;
-const blockHeight = SPHERE_HEIGHT / currentLength;
+const SPHERE_WIDTH = 1000;
+const SPHERE_HEIGHT = 1000;
 
 const handleChange = (e) => {
   const totalSlices = parseInt(e.target.value);
@@ -32,7 +30,7 @@ const createHemisphere = ({ hemisphere, totalSlices }) => {
   earth.appendChild(element);
 
   for (let currentSlice = 0; currentSlice < totalSlices; currentSlice++) {
-    addSlice({ totalSlices, currentSlice, element });
+    addSlice({ totalSlices, currentSlice, element, hemisphere });
   }
 };
 
@@ -49,7 +47,7 @@ const updateBlockStyle = (totalSlices) => {
     }
     .slice {
       width: ${SPHERE_WIDTH / totalSlices}px;
-      transform: rotateY(${360 / totalSlices}deg);
+      /*transform: rotateY(${360 / totalSlices}deg);*/
     }
 
     .block {
@@ -57,16 +55,16 @@ const updateBlockStyle = (totalSlices) => {
     }
     
     .northern-hemisphere .block {
-      transform: rotateX(${360 / totalSlices}deg);
+      /*transform: rotateX(${90 / (totalSlices / 4)}deg);*/
     }
 
     .southern-hemisphere .block {
-      transform: rotateX(-${360 / totalSlices}deg);
+      /*transform: rotateX(-${90 / (totalSlices / 4)}deg);*/
     }
   `;
 };
 
-const addSlice = ({ totalSlices, currentSlice, element }) => {
+const addSlice = ({ totalSlices, currentSlice, element, hemisphere }) => {
   const allBlocks = element.querySelectorAll(".slice");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1] || element;
@@ -76,20 +74,33 @@ const addSlice = ({ totalSlices, currentSlice, element }) => {
   lastBlock.appendChild(slice);
 
   for (let currentBlock = 0; currentBlock < totalSlices / 4; currentBlock++) {
-    addBlock({ slice, currentSlice, currentBlock, totalSlices });
+    addBlock({ slice, currentSlice, currentBlock, totalSlices, hemisphere });
   }
 };
 
-const addBlock = ({ slice, currentSlice, currentBlock, totalSlices }) => {
+const addBlock = ({
+  slice,
+  currentSlice,
+  currentBlock,
+  totalSlices,
+  hemisphere,
+}) => {
   const allBlocks = slice.querySelectorAll(".block");
   const numberOfBlocks = allBlocks.length;
   const lastBlock = allBlocks[numberOfBlocks - 1] || slice;
 
   const newBlock = document.createElement("div");
   newBlock.className = "block";
-  const bgXPosition = `${(100 / (totalSlices - 1)) * currentSlice}%`;
-  const bgYPosition = `${(100 / (totalSlices - 1)) * currentBlock}%`;
-  newBlock.style.backgroundPosition = `${bgXPosition} ${bgYPosition}`;
+  const bgXPosition = (100 / (totalSlices - 1)) * currentSlice;
+  const bgYPosition = (100 / (totalSlices - 1)) * currentBlock;
+  newBlock.style.backgroundPosition = `${bgXPosition}% ${bgYPosition}%`;
+
+  if (hemisphere === "northern") {
+    newBlock.innerHTML = `${currentSlice} | ${Math.abs(currentBlock - 4)}`;
+  } else {
+    newBlock.innerHTML = `${currentSlice} | ${currentBlock + 5}`;
+  }
+
   lastBlock.appendChild(newBlock);
 };
 

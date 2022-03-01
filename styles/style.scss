@@ -29,7 +29,7 @@ input {
   perspective: 999999999em;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
 
   * {
@@ -48,18 +48,19 @@ input {
 .block {
   //background-image: url("globo.png");
   //background-image: url("https://picsum.photos/1000/1000");
+  background-image: url("image.jpg");
   background-repeat: no-repeat;
   width: 100%;
-  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 1px rgb(0, 0, 0);
   position: absolute;
-  color: white;
+  color: black;
   left: 0%;
   width: 100%;
 }
 
 .hemisphere {
   display: flex;
-  justify-content: center;
+  justify-content: left;
 
   > .slice {
     //position: initial;
@@ -85,9 +86,10 @@ input {
 }
 
 .circle {
-  width: 1220px;
-  height: 1220px;
-  background: rgba(255, 0, 0, 0.5);
+  display: none;
+  width: 1270px;
+  height: 1270px;
+  background: rgba(255, 0, 0, 1);
   border-radius: 50%;
   position: absolute;
 }
