@@ -1,5 +1,5 @@
-const SPHERE_WIDTH = 1000;
-const SPHERE_HEIGHT = 1000;
+const SPHERE_CIRCUMFERENCE = 2000;
+const SPHERE_HEIGHT = 2000;
 
 const earth = document.querySelector(".earth");
 
@@ -17,8 +17,8 @@ const renderSphere = () => {
   document.querySelector("label span").innerHTML = inputValue;
 
   totalSlices = parseInt(inputValue);
-  blocksBySlice = parseInt(inputValue) / 2;
-  blockWidth = SPHERE_WIDTH / totalSlices;
+  blocksBySlice = parseInt(inputValue) / 4;
+  blockWidth = SPHERE_CIRCUMFERENCE / totalSlices;
   blockHeight = SPHERE_HEIGHT / totalSlices;
 
   resetBlocks();
@@ -48,26 +48,29 @@ const resetBlocks = () => {
 
 const updateBlockStyle = () => {
   const styleElement = document.querySelector("style");
+  const earthWidth = (SPHERE_CIRCUMFERENCE / 100) * 32;
+
   styleElement.innerHTML = `
     .earth { 
-      width: ${SPHERE_WIDTH}px;
-      height: ${SPHERE_WIDTH}px;
+      width: ${earthWidth}px;
+      height: ${earthWidth}px;
+      transform-origin: center center -${earthWidth / 2}px;
+    }
+    .hemisphere {
+      width: ${blockWidth}px;
+    }
+    .northern-hemisphere .block {
+      transform: rotateX(${90 / blocksBySlice}deg);
+    }
+    .southern-hemisphere .block {
+      transform: rotateX(-${90 / blocksBySlice}deg);
     }
     .slice {
       width: ${blockWidth}px;
-      /*transform: rotateY(${360 / totalSlices}deg);*/
+      transform: rotateY(${360 / totalSlices}deg);
     }
-
     .block {
       height: ${blockHeight}px;
-    }
-    
-    .northern-hemisphere .block {
-      /*transform: rotateX(${90 / blocksBySlice}deg);*/
-    }
-
-    .southern-hemisphere .block {
-      /*transform: rotateX(-${90 / blocksBySlice}deg);*/
     }
   `;
 };
@@ -95,13 +98,15 @@ const addBlock = ({ slice, currentSlice, currentBlock, hemisphere }) => {
   newBlock.className = "block";
 
   const xIndex = currentSlice;
-  let yIndex = currentBlock + blocksBySlice;
+  let yIndex = parseInt(currentBlock + blocksBySlice);
 
   if (hemisphere === "northern") {
-    yIndex = Math.abs(currentBlock - blocksBySlice + 1);
+    yIndex = parseInt(Math.abs(currentBlock - blocksBySlice + 1));
   }
 
-  newBlock.style.backgroundPosition = `${xIndex}% ${yIndex}%`;
+  newBlock.style.backgroundPosition = `-${xIndex * blockWidth}px -${
+    yIndex * blockHeight
+  }px`;
 
   lastBlock.appendChild(newBlock);
 };

@@ -8,7 +8,10 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  overflow: hidden; }
+  body * {
+    transform-style: preserve-3d; }
 
 label {
   color: white;
@@ -25,10 +28,9 @@ input {
   perspective: 999999999em;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  flex-direction: column; }
-  .earth * {
-    transform-style: preserve-3d; }
+  align-items: center;
+  flex-direction: column;
+  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
 
 .slice {
   height: 0;
@@ -38,10 +40,9 @@ input {
   left: 100%; }
 
 .block {
-  background-image: url("image.jpg");
+  background-image: url("https://picsum.photos/2000/2000");
   background-repeat: no-repeat;
   width: 100%;
-  box-shadow: 0 0 0 1px black;
   position: absolute;
   color: black;
   left: 0%;
