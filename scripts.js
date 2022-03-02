@@ -1,5 +1,5 @@
-const SPHERE_CIRCUMFERENCE = 2000;
-const SPHERE_HEIGHT = 2000;
+const SPHERE_CIRCUMFERENCE = 944;
+const SPHERE_HEIGHT = 476;
 
 const earth = document.querySelector(".earth");
 
@@ -17,7 +17,7 @@ const renderSphere = () => {
   document.querySelector("label span").innerHTML = inputValue;
 
   totalSlices = parseInt(inputValue);
-  blocksBySlice = parseInt(inputValue) / 4;
+  blocksBySlice = parseInt(inputValue) / 2;
   blockWidth = SPHERE_CIRCUMFERENCE / totalSlices;
   blockHeight = SPHERE_HEIGHT / totalSlices;
 
@@ -48,7 +48,7 @@ const resetBlocks = () => {
 
 const updateBlockStyle = () => {
   const styleElement = document.querySelector("style");
-  const earthWidth = (SPHERE_CIRCUMFERENCE / 100) * 32;
+  const earthWidth = (SPHERE_CIRCUMFERENCE / 100) * 31.8;
 
   styleElement.innerHTML = `
     .earth { 
