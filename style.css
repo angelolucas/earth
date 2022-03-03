@@ -23,7 +23,14 @@ label {
 input {
   box-sizing: border-box; }
 
+@keyframes rotation {
+  from {
+    transform: rotatey(0deg) scale3d(3, 3, 3); }
+  to {
+    transform: rotatey(360deg) scale3d(3, 3, 3); } }
+
 .earth {
+  animation: rotation 20s linear infinite;
   flex: auto;
   position: relative;
   perspective: 999999999em;
@@ -31,7 +38,7 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale3d(3, 3, 3); }
+  transform: rotateX(0deg) rotateY(0deg) scale3d(3, 3, 3); }
 
 .slice {
   height: 0;
@@ -41,7 +48,7 @@ input {
   left: 100%; }
 
 .block {
-  background-image: url("images/interrupted-sinusoidal-12.svg");
+  background-image: url("images/interrupted-sinusoidal-24-no-graticule.svg");
   background-repeat: no-repeat;
   width: 100%;
   position: absolute;

@@ -29,7 +29,17 @@ input {
   box-sizing: border-box;
 }
 
+@keyframes rotation {
+  from {
+    transform: rotatey(0deg) scale3d(3, 3, 3);
+  }
+  to {
+    transform: rotatey(360deg) scale3d(3, 3, 3);
+  }
+}
+
 .earth {
+  animation: rotation 20s linear infinite;
   flex: auto;
   position: relative;
   perspective: 999999999em;
@@ -37,7 +47,7 @@ input {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale3d(3, 3, 3);
+  transform: rotateX(0deg) rotateY(0deg) scale3d(3, 3, 3);
 }
 
 .slice {
@@ -50,12 +60,12 @@ input {
 
 .block {
   //background-image: url("images/globe.png");
-  background-image: url("images/interrupted-sinusoidal-12.svg");
+  background-image: url("images/interrupted-sinusoidal-24-no-graticule.svg");
   //background-image: url("https://picsum.photos/2000/2000");
   //background-image: url("image.jpg");
   background-repeat: no-repeat;
   width: 100%;
-  //box-shadow: 0 0 0 1px rgb(0, 0, 0);
+  //box-shadow: 0 0 0 1px rgb(255, 0, 0);
   position: absolute;
   color: black;
   left: 0%;
