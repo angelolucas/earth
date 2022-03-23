@@ -40,6 +40,11 @@ body:active {
       transform: none !important;
     }
   }
+  &.grid {
+    .block {
+      box-shadow: 0 0 2px rgb(0, 255, 0);
+    }
+  }
 }
 
 .slice {

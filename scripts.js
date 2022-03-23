@@ -4,10 +4,11 @@ const dragArea = document.querySelector("body");
 
 const sphere = {
   segments: 24,
-  rings: 16,
+  rings: 19,
   circumference: 942,
   height: 476,
   plan: false,
+  grid: false,
   scale: 1,
   rotation: {
     x: 0,
@@ -33,6 +34,9 @@ gui.add(sphere, "plan").onChange((plan) => {
     sphereElement.classList.remove("plan");
     sphereElement.style.width = null;
   }
+});
+gui.add(sphere, "grid").onChange(() => {
+  sphereElement.classList.toggle("grid");
 });
 
 let blockWidth;
