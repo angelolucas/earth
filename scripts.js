@@ -8,9 +8,10 @@ const sphere = {
   circumference: 942,
   height: 476,
   plan: false,
+  scale: 1,
   rotation: {
     x: 0,
-    y: 0,
+    y: 247,
   },
 };
 
@@ -23,6 +24,7 @@ gui.add(sphere, "segments", 0, 30).step(1).onChange(handleChange);
 gui.add(sphere, "rings", 0, 60).step(1).onChange(handleChange);
 gui.add(sphere, "circumference", 0, 4000).step(1).onChange(handleChange);
 gui.add(sphere, "height", 0, 4000).step(1).onChange(handleChange);
+gui.add(sphere, "scale", 0, 5).onChange(handleChange);
 gui.add(sphere, "plan").onChange((plan) => {
   if (plan) {
     sphereElement.classList.add("plan");
@@ -80,7 +82,8 @@ const updateStyles = () => {
       transform-origin: center center -${sphereWidth / 2}px;
       transform: 
         rotateX(${sphere.rotation.x}deg)
-        rotateY(${sphere.rotation.y}deg);
+        rotateY(${sphere.rotation.y}deg)
+        scale3d(${sphere.scale}, ${sphere.scale}, ${sphere.scale});
     }
     .circle {
       width: ${sphereWidth}px;
