@@ -98,14 +98,14 @@ const updateStyles = () => {
       width: ${blockWidth}px;
     }
     .northern-hemisphere .block {
-      transform: rotateX(${90 / ringsByHemisphere}deg);
+      transform: translateY(0.2px) rotateX(${90 / ringsByHemisphere}deg);
     }
     .southern-hemisphere .block {
-      transform: rotateX(-${90 / ringsByHemisphere}deg);
+      transform: translateY(-0.2px) rotateX(-${90 / ringsByHemisphere}deg);
     }
     .slice {
       width: ${blockWidth}px;
-      transform: rotateY(${360 / sphere.segments}deg);
+      transform: translateX(-0.2px) rotateY(${360 / sphere.segments}deg);
     }
     .block {
       height: ${blockHeight}px;
