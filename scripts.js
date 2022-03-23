@@ -1,20 +1,38 @@
-const SLICES = 24;
-const SPHERE_CIRCUMFERENCE = 942;
-const SPHERE_HEIGHT = 476;
-const BLOCKS_BY_SLICE = 20;
-
-const earth = document.querySelector(".earth");
-
-let blockWidth;
-let blockHeight;
+const sphere = {
+  segments: 24,
+  rings: 16,
+  circumference: 942,
+  height: 476,
+  plan: false,
+};
 
 const handleChange = () => {
   renderSphere();
 };
 
+const gui = new dat.GUI();
+gui.add(sphere, "segments", 0, 30).step(1).onChange(handleChange);
+gui.add(sphere, "rings", 0, 60).step(1).onChange(handleChange);
+gui.add(sphere, "circumference", 0, 4000).step(1).onChange(handleChange);
+gui.add(sphere, "height", 0, 4000).step(1).onChange(handleChange);
+gui.add(sphere, "plan").onChange((plan) => {
+  if (plan) {
+    sphereElement.classList.add("plan");
+    sphereElement.style.width = `${sphere.circumference}px`;
+  } else {
+    sphereElement.classList.remove("plan");
+    sphereElement.style.width = null;
+  }
+});
+
+let blockWidth;
+let blockHeight;
+let ringsByHemisphere;
+
 const renderSphere = () => {
-  blockWidth = SPHERE_CIRCUMFERENCE / SLICES;
-  blockHeight = SPHERE_HEIGHT / 2 / BLOCKS_BY_SLICE;
+  ringsByHemisphere = sphere.rings / 2;
+  blockWidth = sphere.circumference / sphere.segments;
+  blockHeight = sphere.height / 2 / ringsByHemisphere;
 
   resetBlocks();
 
@@ -30,44 +48,46 @@ const renderSphere = () => {
 const createHemisphere = (hemisphere) => {
   const element = document.createElement("div");
   element.className = `${hemisphere}-hemisphere hemisphere`;
-  earth.appendChild(element);
+  sphereElement.appendChild(element);
 
-  for (let currentSlice = 0; currentSlice < SLICES; currentSlice++) {
+  for (let currentSlice = 0; currentSlice < sphere.segments; currentSlice++) {
     addSlice({ currentSlice, element, hemisphere });
   }
 };
 
 const resetBlocks = () => {
-  earth.querySelectorAll(".earth > div").forEach((element) => element.remove());
+  sphereElement
+    .querySelectorAll(".sphere > div")
+    .forEach((element) => element.remove());
 };
 
 const updateBlockStyle = () => {
-  const styleElement = document.querySelector("style");
-  const earthWidth = (SPHERE_CIRCUMFERENCE / 100) * 31.5;
+  const styleElement = document.querySelector("#style-sphere");
+  const sphereWidth = (sphere.circumference / 100) * 31.5;
 
   styleElement.innerHTML = `
-    .earth { 
-      width: ${earthWidth}px;
-      height: ${earthWidth}px;
-      transform-origin: center center -${earthWidth / 2}px;
+    .sphere { 
+      width: ${sphereWidth}px;
+      height: ${sphereWidth}px;
+      transform-origin: center center -${sphereWidth / 2}px;
     }
     .circle {
-      width: ${earthWidth}px;
-      height: ${earthWidth}px;
-      transform: translateZ(-${earthWidth / 2}px);
+      width: ${sphereWidth}px;
+      height: ${sphereWidth}px;
+      transform: translateZ(-${sphereWidth / 2}px);
     }
     .hemisphere {
       width: ${blockWidth}px;
     }
     .northern-hemisphere .block {
-      transform: rotateX(${90 / BLOCKS_BY_SLICE}deg);
+      transform: rotateX(${90 / ringsByHemisphere}deg);
     }
     .southern-hemisphere .block {
-      transform: rotateX(-${90 / BLOCKS_BY_SLICE}deg);
+      transform: rotateX(-${90 / ringsByHemisphere}deg);
     }
     .slice {
       width: ${blockWidth}px;
-      transform: rotateY(${360 / SLICES}deg);
+      transform: rotateY(${360 / sphere.segments}deg);
     }
     .block {
       height: ${blockHeight}px;
@@ -84,7 +104,7 @@ const addSlice = ({ currentSlice, element, hemisphere }) => {
   slice.className = "slice";
   lastBlock.appendChild(slice);
 
-  for (let currentBlock = 0; currentBlock < BLOCKS_BY_SLICE; currentBlock++) {
+  for (let currentBlock = 0; currentBlock < ringsByHemisphere; currentBlock++) {
     addBlock({ slice, currentSlice, currentBlock, hemisphere });
   }
 };
@@ -98,10 +118,10 @@ const addBlock = ({ slice, currentSlice, currentBlock, hemisphere }) => {
   newBlock.className = "block";
 
   const xIndex = currentSlice;
-  let yIndex = parseInt(currentBlock + BLOCKS_BY_SLICE);
+  let yIndex = parseInt(currentBlock + ringsByHemisphere);
 
   if (hemisphere === "northern") {
-    yIndex = parseInt(Math.abs(currentBlock - BLOCKS_BY_SLICE + 1));
+    yIndex = parseInt(Math.abs(currentBlock - ringsByHemisphere + 1));
   }
 
   newBlock.style.backgroundPosition = `-${xIndex * blockWidth}px -${
@@ -113,11 +133,12 @@ const addBlock = ({ slice, currentSlice, currentBlock, hemisphere }) => {
 
 const createStyle = () => {
   const style = document.createElement("style");
-  style.innerHTML = `.slice{} .block{}`;
+  style.setAttribute("id", "style-sphere");
   document.head.appendChild(style);
 };
 
 window.onload = () => {
+  applyRotatiton();
   createStyle();
   renderSphere();
 };

@@ -9,28 +9,15 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  overflow: hidden; }
+  overflow: hidden;
+  cursor: -webkit-grab; }
   body * {
     transform-style: preserve-3d; }
 
-label {
-  color: white;
-  padding: 10px;
-  display: block;
-  text-align: center;
-  font-family: arial; }
+body:active {
+  cursor: -webkit-grabbing; }
 
-input {
-  box-sizing: border-box; }
-
-@keyframes rotation {
-  from {
-    transform: rotatey(0deg) scale3d(3, 3, 3); }
-  to {
-    transform: rotatey(360deg) scale3d(3, 3, 3); } }
-
-.earth {
-  animation: rotation 20s linear infinite;
+.sphere {
   flex: auto;
   position: relative;
   perspective: 999999999em;
@@ -39,6 +26,11 @@ input {
   align-items: center;
   flex-direction: column;
   transform: rotateX(0deg) rotateY(0deg) scale3d(3, 3, 3); }
+  .sphere.plan {
+    transform: none !important;
+    align-items: flex-start; }
+    .sphere.plan * {
+      transform: none !important; }
 
 .slice {
   height: 0;
@@ -70,14 +62,6 @@ input {
   .hemisphere.southern-hemisphere .block {
     top: 100%;
     transform-origin: top; }
-
-.circle {
-  display: none;
-  width: 1270px;
-  height: 1270px;
-  background: red;
-  border-radius: 50%;
-  position: absolute; }
 
 .stroke {
   fill: none;

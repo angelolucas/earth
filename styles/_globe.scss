@@ -11,35 +11,18 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  cursor: -webkit-grab;
 
   * {
     transform-style: preserve-3d;
   }
 }
 
-label {
-  color: white;
-  padding: 10px;
-  display: block;
-  text-align: center;
-  font-family: arial;
+body:active {
+  cursor: -webkit-grabbing;
 }
 
-input {
-  box-sizing: border-box;
-}
-
-@keyframes rotation {
-  from {
-    transform: rotatey(0deg) scale3d(3, 3, 3);
-  }
-  to {
-    transform: rotatey(360deg) scale3d(3, 3, 3);
-  }
-}
-
-.earth {
-  animation: rotation 20s linear infinite;
+.sphere {
   flex: auto;
   position: relative;
   perspective: 999999999em;
@@ -48,6 +31,15 @@ input {
   align-items: center;
   flex-direction: column;
   transform: rotateX(0deg) rotateY(0deg) scale3d(3, 3, 3);
+
+  &.plan {
+    transform: none !important;
+    align-items: flex-start;
+
+    * {
+      transform: none !important;
+    }
+  }
 }
 
 .slice {
@@ -59,14 +51,12 @@ input {
 }
 
 .block {
-  //background-image: url("images/globe.png");
   background-image: url("images/interrupted-sinusoidal-24-no-graticule.svg");
-  //background-image: url("https://picsum.photos/2000/2000");
-  //background-image: url("image.jpg");
   background-repeat: no-repeat;
+  //background-color: rgba(255, 255, 255, 0.3);
   width: 100%;
-  //box-shadow: 0 0 0 1px rgb(255, 0, 0);
   position: absolute;
+  //box-shadow: 0 0 2px rgb(255, 0, 0);
   color: black;
   left: 0%;
   width: 100%;
@@ -77,7 +67,6 @@ input {
   justify-content: left;
 
   > .slice {
-    //position: initial;
     left: initial;
     transform: rotateX(0deg);
   }
@@ -97,13 +86,4 @@ input {
       transform-origin: top;
     }
   }
-}
-
-.circle {
-  display: none;
-  width: 1270px;
-  height: 1270px;
-  background: rgba(255, 0, 0, 1);
-  border-radius: 50%;
-  position: absolute;
 }
