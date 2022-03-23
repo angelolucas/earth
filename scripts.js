@@ -1,9 +1,17 @@
+const sphereElement = document.querySelector(".sphere");
+const rotationElement = document.querySelector(".rotation");
+const dragArea = document.querySelector("body");
+
 const sphere = {
   segments: 24,
   rings: 16,
   circumference: 942,
   height: 476,
   plan: false,
+  rotation: {
+    x: 0,
+    y: 0,
+  },
 };
 
 const handleChange = () => {
@@ -42,7 +50,7 @@ const renderSphere = () => {
   // southern hemisphere
   createHemisphere("southern");
 
-  updateBlockStyle();
+  updateStyles();
 };
 
 const createHemisphere = (hemisphere) => {
@@ -61,7 +69,7 @@ const resetBlocks = () => {
     .forEach((element) => element.remove());
 };
 
-const updateBlockStyle = () => {
+const updateStyles = () => {
   const styleElement = document.querySelector("#style-sphere");
   const sphereWidth = (sphere.circumference / 100) * 31.5;
 
@@ -70,6 +78,9 @@ const updateBlockStyle = () => {
       width: ${sphereWidth}px;
       height: ${sphereWidth}px;
       transform-origin: center center -${sphereWidth / 2}px;
+      transform: 
+        rotateX(${sphere.rotation.x}deg)
+        rotateY(${sphere.rotation.y}deg);
     }
     .circle {
       width: ${sphereWidth}px;
@@ -137,8 +148,32 @@ const createStyle = () => {
   document.head.appendChild(style);
 };
 
+dragArea.onmousedown = function (e) {
+  var dragging = true;
+  var prevXRotation = e.pageX;
+  var prevYRotation = e.pageY;
+
+  dragArea.onmousemove = function (e) {
+    if (!dragging) return false;
+
+    var yRotation = e.pageX - prevXRotation;
+    var xRotation = e.pageY - prevYRotation;
+
+    prevXRotation = e.pageX;
+    prevYRotation = e.pageY;
+
+    sphere.rotation.x -= xRotation / 5;
+    sphere.rotation.y += yRotation / 5;
+
+    updateStyles();
+  };
+
+  dragArea.onmouseup = function (e) {
+    dragging = false;
+  };
+};
+
 window.onload = () => {
-  applyRotatiton();
   createStyle();
   renderSphere();
 };
